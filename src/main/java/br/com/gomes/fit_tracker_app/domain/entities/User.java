@@ -8,8 +8,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
 
-@AllArgsConstructor
-@NoArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
 @Builder
@@ -17,6 +16,9 @@ import java.time.Instant;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "users")
+@NoArgsConstructor
+@AllArgsConstructor
+
 public class User implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -28,7 +30,11 @@ public class User implements Serializable {
 
     private String name;
     private String email;
+
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     private String password;
+    private String phone;
 
     @CreationTimestamp
     @Column(name = "created_at")

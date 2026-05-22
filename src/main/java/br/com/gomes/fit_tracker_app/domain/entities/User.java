@@ -16,7 +16,6 @@ import java.time.Instant;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "users")
-@NoArgsConstructor
 @AllArgsConstructor
 
 public class User implements Serializable {

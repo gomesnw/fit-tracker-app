@@ -10,6 +10,6 @@ public record UserInsertDTO(@NotBlank String name,
                             String phone,
                             @NotBlank @Size(min = 6, max = 18) String password) {
     public User toEntity() {
-        return new User(null, name, email, phone, password, null, null);
+        return new User(null, name, email, phone, password, null, null, null);
     }
 }

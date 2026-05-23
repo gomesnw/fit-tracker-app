@@ -36,12 +36,13 @@ public class Workout implements Serializable {
     @Column(name = "started_at")
     private Instant startedAt;
 
-    @CreationTimestamp
+    @UpdateTimestamp
     @Column(name = "finished_at")
     private Instant finishedAt;
 
     private String name;
     private WorkoutStatus status;
+    private String notes;
 
     @CreationTimestamp
     @Column(name = "created_at")

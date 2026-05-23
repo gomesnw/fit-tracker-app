@@ -13,7 +13,6 @@ public record WorkoutResponseDTO(
 
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM HH:mm:ss", timezone = "America/Sao_Paulo")
         Instant startedAt,
-        Instant finishedAt,
         String name,
         String notes,
         WorkoutStatus status,
@@ -21,7 +20,7 @@ public record WorkoutResponseDTO(
         Instant createdAt)
 {
     public WorkoutResponseDTO (Workout entity){
-        this(entity.getId(), entity.getUser(), entity.getStartedAt(), entity.getFinishedAt(),
+        this(entity.getId(), entity.getUser(), entity.getStartedAt(),
                 entity.getName(), entity.getNotes(), entity.getStatus(), entity.getCreatedAt());
     }
 }

@@ -8,6 +8,6 @@ public record WorkoutInsertDTO
          String notes)
 {
     public Workout toEntity(){
-        return new Workout(null, null, null, null, name, null, notes, null, null);
+        return new Workout(null, null, null, null, name, null, notes, null, null, null);
     }
 }

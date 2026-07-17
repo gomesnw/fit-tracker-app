@@ -10,13 +10,11 @@ public record ExerciseResponseDTO(
         String name,
         String muscleGroup,
         String notes,
-        String brand,
-        String model,
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "America/Sao_Paulo")
         Instant createdAt)
 {
     public ExerciseResponseDTO (Exercise entity){
         this(entity.getId(), entity.getName(), entity.getMuscleGroup(), entity.getNotes(),
-                entity.getBrand(), entity.getModel(), entity.getCreatedAt());
+               entity.getCreatedAt());
     }
 }

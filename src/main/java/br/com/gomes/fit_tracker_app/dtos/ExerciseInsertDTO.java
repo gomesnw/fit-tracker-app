@@ -5,10 +5,9 @@ import jakarta.validation.constraints.NotBlank;
 
 public record ExerciseInsertDTO(@NotBlank String name,
                                 @NotBlank String muscleGroup,
-                                String notes,
-                                String brand,
-                                String model) {
+                                String notes
+                                ) {
     public Exercise toEntity(){
-        return new Exercise(null, name, muscleGroup, notes, brand, model, null, null);
+        return new Exercise(null, name, muscleGroup, notes, null, null);
     }
 }

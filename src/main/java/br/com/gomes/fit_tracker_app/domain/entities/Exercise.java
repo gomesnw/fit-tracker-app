@@ -30,8 +30,6 @@ public class Exercise implements Serializable {
     private String name;
     private String muscleGroup;
     private String notes;
-    private String brand;
-    private String model;
 
     @CreationTimestamp
     @Column(name = "created_at")

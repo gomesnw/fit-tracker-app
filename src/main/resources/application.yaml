@@ -2,4 +2,4 @@ spring:
   application:
     name: fit-tracker-app
   profiles:
-    active: test
+    active: dev

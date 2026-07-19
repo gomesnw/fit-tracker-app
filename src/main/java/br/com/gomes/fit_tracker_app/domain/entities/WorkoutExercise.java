@@ -2,6 +2,8 @@ package br.com.gomes.fit_tracker_app.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -11,9 +13,11 @@ import java.time.Instant;
 @Setter
 @RequiredArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Builder
 
 @Table(name="workout_exercises")
 @Entity
+@AllArgsConstructor
 public class WorkoutExercise implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -25,7 +29,13 @@ public class WorkoutExercise implements Serializable {
 
     private Integer orderIndex;
     private String notes;
+
+    @CreationTimestamp
+    @Column(name = "created_at")
     private Instant createdAt;
+
+    @UpdateTimestamp
+    @Column(name="updated_at")
     private Instant updatedAt;
 
     @ManyToOne

@@ -3,5 +3,4 @@ spring:
     name: fit-tracker-app
   profiles:
     active: dev
-  flyway:
-    enabled: true
+

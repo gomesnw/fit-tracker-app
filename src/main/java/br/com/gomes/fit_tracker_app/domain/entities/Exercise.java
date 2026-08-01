@@ -26,8 +26,9 @@ public class Exercise implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Long id;
-
     private String name;
+
+    @Column(name = "muscle_group")
     private String muscleGroup;
     private String notes;
 

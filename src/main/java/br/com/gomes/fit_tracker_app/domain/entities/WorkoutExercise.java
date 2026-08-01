@@ -27,7 +27,9 @@ public class WorkoutExercise implements Serializable {
     @EqualsAndHashCode.Include
     private Long id;
 
+    @Column(name = "order_index")
     private Integer orderIndex;
+
     private String notes;
 
     @CreationTimestamp

@@ -1,6 +1,7 @@
 package br.com.gomes.fit_tracker_app.domain.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -26,9 +27,13 @@ public class Exercise implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Long id;
+
+    @NotNull
+    @Column(nullable = false)
     private String name;
 
-    @Column(name = "muscle_group")
+    @NotNull
+    @Column(name = "muscle_group", nullable = false)
     private String muscleGroup;
     private String notes;
 

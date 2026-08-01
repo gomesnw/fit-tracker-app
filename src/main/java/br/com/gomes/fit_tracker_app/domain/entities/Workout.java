@@ -2,6 +2,7 @@ package br.com.gomes.fit_tracker_app.domain.entities;
 
 import br.com.gomes.fit_tracker_app.domain.enums.WorkoutStatus;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -30,8 +31,9 @@ public class Workout implements Serializable {
     @EqualsAndHashCode.Include
     private Long id;
 
+    @NotNull
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @CreationTimestamp
@@ -42,7 +44,10 @@ public class Workout implements Serializable {
     @Column(name = "finished_at")
     private Instant finishedAt;
 
+    @NotNull
+    @Column(nullable = false)
     private String name;
+
     private WorkoutStatus status;
     private String notes;
 
@@ -54,6 +59,8 @@ public class Workout implements Serializable {
     @Column(name = "updated_at")
     private Instant updatedAt;
 
+    @NotNull
+    @Column(name="exercises", nullable = false)
     @OneToMany(mappedBy = "workout", cascade = CascadeType.ALL,
             fetch = FetchType.LAZY, orphanRemoval = true)
     private List<WorkoutExercise> workoutExercises = new ArrayList<>();

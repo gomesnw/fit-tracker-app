@@ -1,6 +1,7 @@
 package br.com.gomes.fit_tracker_app.domain.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -30,18 +31,22 @@ public class User implements Serializable {
     @EqualsAndHashCode.Include
     private Long id;
 
+    @NotNull
     @Column(nullable = false, length = 120)
     private String name;
 
+    @NotNull
     @Column(nullable = false, length = 254)
     private String email;
 
+    @NotNull
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     @JsonIgnore
     @Column(nullable = false, length = 18)
     private String password;
 
+    @NotNull
     @Column(nullable = false, length = 11)
     private String phone;
 

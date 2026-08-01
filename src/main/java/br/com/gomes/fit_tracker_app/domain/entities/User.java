@@ -30,13 +30,19 @@ public class User implements Serializable {
     @EqualsAndHashCode.Include
     private Long id;
 
+    @Column(nullable = false, length = 120)
     private String name;
+
+    @Column(nullable = false, length = 254)
     private String email;
 
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     @JsonIgnore
+    @Column(nullable = false, length = 18)
     private String password;
+
+    @Column(nullable = false, length = 11)
     private String phone;
 
     @CreationTimestamp
@@ -48,8 +54,19 @@ public class User implements Serializable {
     private Instant updatedAt;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY, orphanRemoval = true)
     @Setter(AccessLevel.NONE)
     private List<Workout> workouts = new ArrayList<>();
+
+    public void addWorkout(Workout workout) {
+        workouts.add(workout);
+        workout.setUser(this);
+    }
+
+    public void removeWorkout(Workout workout) {
+        workouts.remove(workout);
+        workout.setUser(null);
+    }
 
 }

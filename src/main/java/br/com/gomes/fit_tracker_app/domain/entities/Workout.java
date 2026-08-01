@@ -54,6 +54,18 @@ public class Workout implements Serializable {
     @Column(name = "updated_at")
     private Instant updatedAt;
 
-    @OneToMany(mappedBy = "workout", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "workout", cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY, orphanRemoval = true)
     private List<WorkoutExercise> workoutExercises = new ArrayList<>();
+
+    public void addWorkoutExercise(WorkoutExercise workoutExercise) {
+        workoutExercises.add(workoutExercise);
+        workoutExercise.setWorkout(this);
+    }
+
+    public void removeWorkoutExercise(WorkoutExercise workoutExercise) {
+        workoutExercises.remove(workoutExercise);
+        workoutExercise.setWorkout(null);
+    }
+
 }

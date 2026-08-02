@@ -1,7 +1,11 @@
 package br.com.gomes.fit_tracker_app.domain.entities;
 
+import br.com.gomes.fit_tracker_app.domain.enums.EquipmentType;
+import br.com.gomes.fit_tracker_app.domain.enums.ExerciseCategory;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -28,13 +32,22 @@ public class Exercise implements Serializable {
     @EqualsAndHashCode.Include
     private Long id;
 
-    @NotNull
-    @Column(nullable = false)
+    @NotBlank
+    @Size(max = 100)
+    @Column(nullable = false, length = 100)
     private String name;
 
     @NotNull
-    @Column(name = "muscle_group", nullable = false)
-    private String muscleGroup;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, name="equipment_type")
+    private EquipmentType equipmentType;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, name="exercise_category")
+    private ExerciseCategory exerciseCategory;
+
+    @Column(length = 500)
     private String notes;
 
     @CreationTimestamp

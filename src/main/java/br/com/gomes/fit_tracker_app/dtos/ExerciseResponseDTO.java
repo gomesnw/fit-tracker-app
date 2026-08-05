@@ -14,13 +14,11 @@ public record ExerciseResponseDTO(
         EquipmentType type,
         String notes,
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "America/Sao_Paulo")
-        Instant createdAt,
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "America/Sao_Paulo")
-        Instant updatedAt
+        Instant createdAt
 )
 {
     public ExerciseResponseDTO (Exercise entity){
         this(entity.getId(), entity.getName(), entity.getExerciseCategory(), entity.getEquipmentType(), entity.getNotes(),
-               entity.getCreatedAt(), entity.getUpdatedAt());
+               entity.getCreatedAt());
     }
 }

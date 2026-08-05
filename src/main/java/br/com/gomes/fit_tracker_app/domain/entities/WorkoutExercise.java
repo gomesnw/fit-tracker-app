@@ -14,12 +14,13 @@ import java.util.List;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
+
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Builder
 
 @Table(name="workout_exercises")
 @Entity
+@NoArgsConstructor
 @AllArgsConstructor
 public class WorkoutExercise implements Serializable {
     @Serial
@@ -49,12 +50,12 @@ public class WorkoutExercise implements Serializable {
     private Exercise exercise;
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="workout_id", nullable = false)
     private Workout workout;
 
     @OneToMany(mappedBy = "workoutExercise", cascade = CascadeType.ALL,
-            orphanRemoval = true)
+            orphanRemoval = true, fetch = FetchType.LAZY)
     private List<WorkoutSet> sets = new ArrayList<>();
 
     public void addSet(WorkoutSet set) {

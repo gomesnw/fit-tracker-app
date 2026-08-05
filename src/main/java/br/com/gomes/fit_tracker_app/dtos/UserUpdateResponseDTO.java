@@ -13,6 +13,6 @@ public record UserUpdateResponseDTO(
         Instant updatedAt
 ){
     public UserUpdateResponseDTO(User entity) {
-        this(entity.getId(), entity.getName(), entity.getEmail(), entity.getCreatedAt());
+        this(entity.getId(), entity.getName(), entity.getEmail(), entity.getUpdatedAt());
     }
 }

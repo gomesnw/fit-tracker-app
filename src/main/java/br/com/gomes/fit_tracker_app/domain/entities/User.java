@@ -12,7 +12,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-@RequiredArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Builder
@@ -22,7 +22,7 @@ import java.util.List;
 @Table(name = "users")
 @AllArgsConstructor
 
-public class User implements Serializable {
+public class User implements Serializable{
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -30,6 +30,10 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Long id;
+
+    @NotNull
+    @Column(nullable = false, length = 100, unique = true)
+    private String username;
 
     @NotNull
     @Column(nullable = false, length = 120)
@@ -73,5 +77,4 @@ public class User implements Serializable {
         workouts.remove(workout);
         workout.setUser(null);
     }
-
 }

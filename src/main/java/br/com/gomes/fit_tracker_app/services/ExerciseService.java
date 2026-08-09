@@ -3,7 +3,7 @@ package br.com.gomes.fit_tracker_app.services;
 import br.com.gomes.fit_tracker_app.domain.entities.Exercise;
 import br.com.gomes.fit_tracker_app.dtos.ExerciseInsertDTO;
 import br.com.gomes.fit_tracker_app.dtos.ExerciseResponseDTO;
-import br.com.gomes.fit_tracker_app.dtos.ExerciseUpdateInsertDTO;
+import br.com.gomes.fit_tracker_app.dtos.ExerciseUpdateDTO;
 import br.com.gomes.fit_tracker_app.dtos.ExerciseUpdateResponseDTO;
 import br.com.gomes.fit_tracker_app.exceptions.ResourceNotFoundException;
 import br.com.gomes.fit_tracker_app.repositories.ExerciseRepository;
@@ -36,7 +36,7 @@ public class ExerciseService {
         return new ExerciseResponseDTO(entity);
     }
 
-    public ExerciseUpdateResponseDTO updateExercise (Long id, ExerciseUpdateInsertDTO exerciseUpdate){
+    public ExerciseUpdateResponseDTO updateExercise (Long id, ExerciseUpdateDTO exerciseUpdate){
         Exercise existentExercise = exerciseRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFoundException(String.format(MSG_EXERCISE_NOT_FOUND, id)));
 
@@ -53,7 +53,7 @@ public class ExerciseService {
         exerciseRepository.delete(exercise);
     }
 
-    private void updateExerciseData (Exercise entity, ExerciseUpdateInsertDTO exerciseUpdate){
+    private void updateExerciseData (Exercise entity, ExerciseUpdateDTO exerciseUpdate){
         entity.setName(exerciseUpdate.name());
         entity.setExerciseCategory(exerciseUpdate.category());
         entity.setEquipmentType(exerciseUpdate.type());

@@ -2,7 +2,7 @@ package br.com.gomes.fit_tracker_app.controllers;
 
 import br.com.gomes.fit_tracker_app.dtos.UserInsertDTO;
 import br.com.gomes.fit_tracker_app.dtos.UserResponseDTO;
-import br.com.gomes.fit_tracker_app.dtos.UserUpdateInsertDTO;
+import br.com.gomes.fit_tracker_app.dtos.UserUpdateDTO;
 import br.com.gomes.fit_tracker_app.dtos.UserUpdateResponseDTO;
 import br.com.gomes.fit_tracker_app.services.UserService;
 import jakarta.validation.Valid;
@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<UserUpdateResponseDTO> updateUser (@PathVariable Long id, @RequestBody @Valid UserUpdateInsertDTO userUpdate){
+    public ResponseEntity<UserUpdateResponseDTO> updateUser (@PathVariable Long id, @RequestBody @Valid UserUpdateDTO userUpdate){
         return ResponseEntity.status(HttpStatus.OK)
                 .body(userService.updateUser(id, userUpdate));
     }

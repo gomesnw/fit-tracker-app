@@ -2,7 +2,7 @@ package br.com.gomes.fit_tracker_app.controllers;
 
 import br.com.gomes.fit_tracker_app.dtos.ExerciseInsertDTO;
 import br.com.gomes.fit_tracker_app.dtos.ExerciseResponseDTO;
-import br.com.gomes.fit_tracker_app.dtos.ExerciseUpdateInsertDTO;
+import br.com.gomes.fit_tracker_app.dtos.ExerciseUpdateDTO;
 import br.com.gomes.fit_tracker_app.dtos.ExerciseUpdateResponseDTO;
 import br.com.gomes.fit_tracker_app.services.ExerciseService;
 import jakarta.validation.Valid;
@@ -39,7 +39,7 @@ public class ExerciseController {
 
     @PutMapping(value="/{id}")
     public ResponseEntity<ExerciseUpdateResponseDTO> updateExercise(
-            @PathVariable Long id, @RequestBody @Valid ExerciseUpdateInsertDTO exerciseUpdate){
+            @PathVariable Long id, @RequestBody @Valid ExerciseUpdateDTO exerciseUpdate){
         return ResponseEntity.status(HttpStatus.OK).body(exerciseService.updateExercise(id, exerciseUpdate));
     }
 

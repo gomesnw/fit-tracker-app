@@ -3,7 +3,7 @@ package br.com.gomes.fit_tracker_app.services;
 import br.com.gomes.fit_tracker_app.domain.entities.User;
 import br.com.gomes.fit_tracker_app.dtos.UserInsertDTO;
 import br.com.gomes.fit_tracker_app.dtos.UserResponseDTO;
-import br.com.gomes.fit_tracker_app.dtos.UserUpdateInsertDTO;
+import br.com.gomes.fit_tracker_app.dtos.UserUpdateDTO;
 import br.com.gomes.fit_tracker_app.dtos.UserUpdateResponseDTO;
 import br.com.gomes.fit_tracker_app.exceptions.ResourceNotFoundException;
 import br.com.gomes.fit_tracker_app.repositories.UserRepository;
@@ -36,7 +36,7 @@ public class UserService {
         return new UserResponseDTO(entity);
     }
 
-    public UserUpdateResponseDTO updateUser (Long id, UserUpdateInsertDTO userUpdate){
+    public UserUpdateResponseDTO updateUser (Long id, UserUpdateDTO userUpdate){
         User existentUser = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(String.format(MSG_USER_NOT_FOUND, id)));
         updateUserData(existentUser, userUpdate);
@@ -52,7 +52,7 @@ public class UserService {
         userRepository.delete(entity);
     }
 
-    private void updateUserData(User entity, UserUpdateInsertDTO updateInsertDTO) {
+    private void updateUserData(User entity, UserUpdateDTO updateInsertDTO) {
         entity.setName(updateInsertDTO.name());
         entity.setEmail(updateInsertDTO.email());
         entity.setPhone(updateInsertDTO.phone());

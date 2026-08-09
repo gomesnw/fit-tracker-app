@@ -5,9 +5,7 @@ import br.com.gomes.fit_tracker_app.domain.entities.User;
 import br.com.gomes.fit_tracker_app.domain.entities.Workout;
 import br.com.gomes.fit_tracker_app.domain.entities.WorkoutExercise;
 import br.com.gomes.fit_tracker_app.domain.enums.WorkoutStatus;
-import br.com.gomes.fit_tracker_app.dtos.WorkoutExerciseInsertDTO;
-import br.com.gomes.fit_tracker_app.dtos.WorkoutInsertDTO;
-import br.com.gomes.fit_tracker_app.dtos.WorkoutResponseDTO;
+import br.com.gomes.fit_tracker_app.dtos.*;
 import br.com.gomes.fit_tracker_app.exceptions.ResourceNotFoundException;
 import br.com.gomes.fit_tracker_app.repositories.ExerciseRepository;
 import br.com.gomes.fit_tracker_app.repositories.UserRepository;
@@ -24,6 +22,7 @@ public class WorkoutService {
     private final ExerciseRepository exerciseRepository;
     private final UserRepository userRepository;
     private static final String MSG_EXERCISE_NOT_FOUND = "Exercício não encontrado com o id fornecido: %d";
+    private static final String MSG_WORKOUT_NOT_FOUND = "Treino não encontrado com o id fornecido: %d";
 
     public List<WorkoutResponseDTO> findAll(){
         List<Workout> workoutList = workoutRepository.findAll();
@@ -32,7 +31,7 @@ public class WorkoutService {
 
     public WorkoutResponseDTO findById(Long id){
         Workout entity = workoutRepository.findById(id)
-                .orElseThrow(() ->new ResourceNotFoundException("Workout not found with id " + id));
+                .orElseThrow(() ->new ResourceNotFoundException(String.format(MSG_WORKOUT_NOT_FOUND, id)));
         return new WorkoutResponseDTO(entity);
     }
 
@@ -58,5 +57,35 @@ public class WorkoutService {
 
         workoutRepository.save(entity);
         return new WorkoutResponseDTO(entity);
+    }
+
+    public WorkoutUpdateResponseDTO updateWorkout (Long id, WorkoutUpdateDTO workoutUpdate){
+        Workout existentWorkout = workoutRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(String.format(MSG_WORKOUT_NOT_FOUND, id)));
+
+        updateWorkoutData(existentWorkout, workoutUpdate);
+        workoutRepository.save(existentWorkout);
+        return new WorkoutUpdateResponseDTO(existentWorkout);
+    }
+
+    private void updateWorkoutData(Workout entity, WorkoutUpdateDTO workoutUpdate){
+        entity.setName(workoutUpdate.name());
+        entity.setNotes(workoutUpdate.notes());
+    }
+
+    public WorkoutUpdateResponseDTO updateWorkoutExercise(Long id, Integer orderIndex, WorkoutExerciseUpdateDTO workoutExerciseUpdate){
+        Workout existentWorkout = workoutRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(String.format(MSG_WORKOUT_NOT_FOUND, id)));
+
+        Exercise exercise = exerciseRepository.findById(workoutExerciseUpdate.exerciseId())
+                .orElseThrow(() -> new ResourceNotFoundException
+                        (String.format(MSG_EXERCISE_NOT_FOUND, workoutExerciseUpdate.exerciseId())));
+
+        WorkoutExercise workoutExercise = existentWorkout.findWorkoutExerciseByOrderIndex(orderIndex);
+        workoutExercise.setExercise(exercise);
+        workoutExercise.setNotes(workoutExerciseUpdate.notes());
+
+        workoutRepository.save(existentWorkout);
+        return new WorkoutUpdateResponseDTO(existentWorkout);
     }
 }

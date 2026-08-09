@@ -1,7 +1,6 @@
 package br.com.gomes.fit_tracker_app.controllers;
 
-import br.com.gomes.fit_tracker_app.dtos.WorkoutInsertDTO;
-import br.com.gomes.fit_tracker_app.dtos.WorkoutResponseDTO;
+import br.com.gomes.fit_tracker_app.dtos.*;
 import br.com.gomes.fit_tracker_app.services.WorkoutService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -35,4 +34,13 @@ public class WorkoutController {
                 body(workoutService.insertWorkout(workoutInsert));
     }
 
+    @PatchMapping(value = "/{id}")
+    public ResponseEntity<WorkoutUpdateResponseDTO> updateWorkout(@PathVariable Long id, @RequestBody @Valid WorkoutUpdateDTO workoutInsert){
+        return ResponseEntity.ok().body(workoutService.updateWorkout(id, workoutInsert));
+    }
+
+    @PutMapping(value = "/{workoutId}/exercises/{orderIndex}")
+    public ResponseEntity<WorkoutUpdateResponseDTO> updateWorkoutExercise(@PathVariable Long workoutId, @PathVariable Integer orderIndex, @RequestBody @Valid WorkoutExerciseUpdateDTO workoutExerciseUpdate){
+        return ResponseEntity.ok().body(workoutService.updateWorkoutExercise(workoutId, orderIndex, workoutExerciseUpdate));
+    }
 }

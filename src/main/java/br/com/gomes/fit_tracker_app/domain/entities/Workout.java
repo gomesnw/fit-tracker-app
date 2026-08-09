@@ -1,6 +1,7 @@
 package br.com.gomes.fit_tracker_app.domain.entities;
 
 import br.com.gomes.fit_tracker_app.domain.enums.WorkoutStatus;
+import br.com.gomes.fit_tracker_app.exceptions.ResourceNotFoundException;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -73,6 +74,15 @@ public class Workout implements Serializable {
     public void removeWorkoutExercise(WorkoutExercise workoutExercise) {
         workoutExercises.remove(workoutExercise);
         workoutExercise.setWorkout(null);
+    }
+
+    public WorkoutExercise findWorkoutExerciseByOrderIndex(Integer orderIndex) {
+        return workoutExercises.stream()
+                .filter(workoutExercise -> workoutExercise.getOrderIndex().equals(orderIndex))
+                .findFirst()
+                .orElseThrow(() -> new ResourceNotFoundException
+                        (String.format(
+                                "Exercício não encontrado no treino com o índice fornecido: %d", orderIndex)));
     }
 
 }

@@ -43,4 +43,10 @@ public class WorkoutController {
     public ResponseEntity<WorkoutUpdateResponseDTO> updateWorkoutExercise(@PathVariable Long workoutId, @PathVariable Integer orderIndex, @RequestBody @Valid WorkoutExerciseUpdateDTO workoutExerciseUpdate){
         return ResponseEntity.ok().body(workoutService.updateWorkoutExercise(workoutId, orderIndex, workoutExerciseUpdate));
     }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> deleteWorkout(@PathVariable Long id){
+        workoutService.deleteWorkout(id);
+        return ResponseEntity.noContent().build();
+    }
 }

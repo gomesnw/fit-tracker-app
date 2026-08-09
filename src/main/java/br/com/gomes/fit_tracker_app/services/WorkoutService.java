@@ -88,4 +88,11 @@ public class WorkoutService {
         workoutRepository.save(existentWorkout);
         return new WorkoutUpdateResponseDTO(existentWorkout);
     }
+
+    public void deleteWorkout(Long id){
+        Workout existentWorkout = workoutRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(String.format(MSG_WORKOUT_NOT_FOUND, id)));
+
+        workoutRepository.delete(existentWorkout);
+    }
 }

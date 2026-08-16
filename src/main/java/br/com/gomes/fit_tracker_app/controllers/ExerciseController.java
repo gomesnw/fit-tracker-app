@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value="/exercises")
+@RequestMapping(value="/v1/exercises")
 public class ExerciseController {
     private final ExerciseService exerciseService;
 

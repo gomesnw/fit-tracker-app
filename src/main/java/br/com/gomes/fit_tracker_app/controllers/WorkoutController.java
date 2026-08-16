@@ -12,7 +12,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value="/workouts")
+@RequestMapping(value="/v1/workouts")
 public class WorkoutController {
     private final WorkoutService workoutService;
 

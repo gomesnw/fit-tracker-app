@@ -1,10 +1,7 @@
 package br.com.gomes.fit_tracker_app.controllers.exceptions;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -14,6 +11,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class StandardError implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;

@@ -1,9 +1,6 @@
 package br.com.gomes.fit_tracker_app.services;
 
-import br.com.gomes.fit_tracker_app.domain.entities.Exercise;
-import br.com.gomes.fit_tracker_app.domain.entities.User;
-import br.com.gomes.fit_tracker_app.domain.entities.Workout;
-import br.com.gomes.fit_tracker_app.domain.entities.WorkoutExercise;
+import br.com.gomes.fit_tracker_app.domain.entities.*;
 import br.com.gomes.fit_tracker_app.domain.enums.WorkoutStatus;
 import br.com.gomes.fit_tracker_app.dtos.*;
 import br.com.gomes.fit_tracker_app.exceptions.ResourceNotFoundException;
@@ -12,6 +9,7 @@ import br.com.gomes.fit_tracker_app.repositories.UserRepository;
 import br.com.gomes.fit_tracker_app.repositories.WorkoutRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,6 +19,7 @@ public class WorkoutService {
     private final WorkoutRepository workoutRepository;
     private final ExerciseRepository exerciseRepository;
     private final UserRepository userRepository;
+
     private static final String MSG_EXERCISE_NOT_FOUND = "Exercício não encontrado com o id fornecido: %d";
     private static final String MSG_WORKOUT_NOT_FOUND = "Treino não encontrado com o id fornecido: %d";
 
@@ -37,7 +36,8 @@ public class WorkoutService {
 
     public WorkoutResponseDTO insertWorkout(WorkoutInsertDTO workout){
         Workout entity = new Workout();
-        User user = userRepository.findById(2L).orElseThrow(() -> new ResourceNotFoundException("Usuário inexistente."));
+        User user = userRepository.findById(1L).
+                orElseThrow(() -> new ResourceNotFoundException("Usuário inexistente."));
 
         entity.setUser(user);
 
@@ -94,5 +94,27 @@ public class WorkoutService {
                 .orElseThrow(() -> new ResourceNotFoundException(String.format(MSG_WORKOUT_NOT_FOUND, id)));
 
         workoutRepository.delete(existentWorkout);
+    }
+
+    @Transactional
+    public WorkoutExerciseSetResponseDTO insertWorkoutSet(Long workoutId, Integer orderIndex, WorkoutSetInsertDTO setInsert) {
+        Workout existentWorkout = workoutRepository.findById(workoutId)
+                .orElseThrow(() -> new ResourceNotFoundException(String.format(MSG_WORKOUT_NOT_FOUND, workoutId)));
+
+        WorkoutExercise workoutExercise = existentWorkout.findWorkoutExerciseByOrderIndex(orderIndex);
+
+        WorkoutSet set = WorkoutSet.builder()
+                .orderIndex(setInsert.orderIndex())
+                .reps(setInsert.reps())
+                .weight(setInsert.weight())
+                .repsInReserve(setInsert.repsInReserve())
+                .notes(setInsert.notes())
+                .workoutExercise(workoutExercise)
+                .build();
+
+        workoutExercise.addSet(set);
+
+        workoutRepository.flush();
+        return new WorkoutExerciseSetResponseDTO(set);
     }
 }

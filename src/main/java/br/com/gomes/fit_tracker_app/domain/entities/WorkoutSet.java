@@ -13,7 +13,7 @@ import java.time.Instant;
 @Setter
 @Getter
 @AllArgsConstructor
-@RequiredArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Builder
 
@@ -24,11 +24,17 @@ public class WorkoutSet implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name= "workout_exercise_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name= "workout_exercise_id", nullable = false)
     private WorkoutExercise workoutExercise;
+
+    @NotNull
+    @Column(name = "order_index", nullable = false)
+    private Integer orderIndex;
 
     @NotNull
     @Column(nullable = false)
@@ -37,6 +43,10 @@ public class WorkoutSet implements Serializable {
     @NotNull
     @Column(nullable = false)
     private Double weight;
+
+    @Column(name = "rir")
+    private Integer repsInReserve;
+
     private String notes;
 
     @CreationTimestamp

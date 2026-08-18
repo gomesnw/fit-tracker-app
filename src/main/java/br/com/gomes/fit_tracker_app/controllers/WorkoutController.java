@@ -49,4 +49,9 @@ public class WorkoutController {
         workoutService.deleteWorkout(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping(value = "/{workoutId}/exercises/{orderIndex}")
+    public ResponseEntity<WorkoutExerciseSetResponseDTO> insertWorkoutSet(@PathVariable Long workoutId, @PathVariable Integer orderIndex, @RequestBody @Valid WorkoutSetInsertDTO setInsert){
+        return ResponseEntity.status(HttpStatus.CREATED).body(workoutService.insertWorkoutSet(workoutId, orderIndex, setInsert));
+    }
 }

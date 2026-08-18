@@ -60,8 +60,6 @@ public class Workout implements Serializable {
     @Column(name = "updated_at")
     private Instant updatedAt;
 
-    @NotNull
-    @Column(name="workout_exercises", nullable = false)
     @OneToMany(mappedBy = "workout", cascade = CascadeType.ALL,
             fetch = FetchType.LAZY, orphanRemoval = true)
     private List<WorkoutExercise> workoutExercises = new ArrayList<>();

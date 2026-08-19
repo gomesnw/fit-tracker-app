@@ -57,4 +57,8 @@ public class Exercise implements Serializable {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private Instant updatedAt;
+
+    @JoinColumn(name = "user_id")
+    @ManyToOne
+    private User user;
 }

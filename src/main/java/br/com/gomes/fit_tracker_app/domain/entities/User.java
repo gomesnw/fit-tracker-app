@@ -65,6 +65,10 @@ public class User implements Serializable, UserDetails {
     @Setter(AccessLevel.NONE)
     private List<Workout> workouts = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<Exercise> exercises = new ArrayList<>();
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="users_roles",
             joinColumns = @JoinColumn(name = "user_id"),

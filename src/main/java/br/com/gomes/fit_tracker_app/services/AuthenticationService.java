@@ -8,6 +8,7 @@ import br.com.gomes.fit_tracker_app.dtos.LoginRequestDTO;
 import br.com.gomes.fit_tracker_app.dtos.RegisterRequestDTO;
 import br.com.gomes.fit_tracker_app.dtos.TokenResponseDTO;
 import br.com.gomes.fit_tracker_app.exceptions.BadRequestException;
+import br.com.gomes.fit_tracker_app.exceptions.ResourceNotFoundException;
 import br.com.gomes.fit_tracker_app.repositories.RoleRepository;
 import br.com.gomes.fit_tracker_app.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -67,6 +69,14 @@ public class AuthenticationService {
         } catch (Exception e) {
             throw e;
         }
+    }
+
+    public User getAuthenticatedUser(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+       return userRepository.findByEmail(username)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
     }
 }
 

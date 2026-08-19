@@ -10,10 +10,6 @@ public record RegisterRequestDTO(
         @Size(min = 2, max = 120, message = "O nome deve ter entre 2 e 100 caracteres.")
         String name,
 
-        @NotBlank(message = "Nome de usuário é um campo obrigatório.")
-        @Size(min = 5, max = 30, message = "O nome de usuário deve ter entre 5 e 30 caracteres.")
-        String username,
-
         @NotBlank(message = "E-mail é um campo obrigatório.")
         @Email(message = "Formato de e-mail inválido.")
         @Size(max = 254, message = "O e-mail não pode exceder 254 caracteres.")

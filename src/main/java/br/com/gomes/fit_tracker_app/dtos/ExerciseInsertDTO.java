@@ -1,6 +1,5 @@
 package br.com.gomes.fit_tracker_app.dtos;
 
-import br.com.gomes.fit_tracker_app.domain.entities.Exercise;
 import br.com.gomes.fit_tracker_app.domain.enums.EquipmentType;
 import br.com.gomes.fit_tracker_app.domain.enums.ExerciseCategory;
 import jakarta.validation.constraints.NotBlank;
@@ -10,7 +9,4 @@ public record ExerciseInsertDTO(@NotBlank String name,
                                 EquipmentType type,
                                 String notes
                                 ) {
-    public Exercise toEntity(){
-        return new Exercise(null, name,type, category, notes, null, null);
-    }
 }

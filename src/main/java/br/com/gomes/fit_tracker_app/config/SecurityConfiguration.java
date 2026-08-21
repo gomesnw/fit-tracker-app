@@ -40,7 +40,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                         .requestMatchers(HttpMethod.POST, "/v1/auth/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/v1/users").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/v1/users/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAutheticationFilter, UsernamePasswordAuthenticationFilter.class)

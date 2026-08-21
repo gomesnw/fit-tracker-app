@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserService userService;
 
-    @PutMapping
+    @PutMapping(value = "/me")
     public ResponseEntity<UserUpdateResponseDTO> updateMe(@RequestBody @Valid UserUpdateDTO userUpdate) {
         return ResponseEntity.ok()
                 .body(userService.updateMe(userUpdate));
     }
 
-    @GetMapping
+    @GetMapping(value = "/me")
     public ResponseEntity<UserResponseDTO> findMe(){
         return ResponseEntity.ok().
                 body(userService.findMe());

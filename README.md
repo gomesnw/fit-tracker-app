@@ -72,13 +72,12 @@ Configure as credenciais e demais propriedades necessárias para a conexão com 
 Exemplo de variáveis — ajuste os nomes conforme a configuração real da aplicação:
 
 ```env
-POSTGRES_DB=jdbc:postgresql://localhost:5432/fit_tracker
+POSTGRES_DB=jdbc:postgresql://localhost:5432/fit-tracker-db
 POSTGRES_USER=seu_usuario
-POSTGRES_PASSWOORD=sua_senha
+POSTGRES_PASSWORD=sua_senha
 JWT_KEY=sua_chave_secreta
 ```
 
-**Não compartilhe credenciais ou chaves secretas reais no repositório.**
 
 ### 3. Inicie o banco de dados
 
@@ -137,6 +136,6 @@ Projeto desenvolvido como parte do meu portfólio de estudos em desenvolvimento 
 
 ---
 
-**Desenvolvido por Isaque Geovani**
+**Desenvolvido por Isaque Gomes**
 
 [GitHub](https://github.com/gomesnw) · [LinkedIn](https://www.linkedin.com/in/gomesnw)

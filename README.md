@@ -61,8 +61,8 @@ As operações protegidas utilizam a identidade do usuário autenticado para con
 ### 1. Clone o repositório
 
 ```bash
-git clone https://github.com/gomesnw/fit-tracker.git
-cd fit-tracker
+git clone https://github.com/gomesnw/fit-tracker-app.git
+cd fit-tracker-app
 ```
 
 ### 2. Configure as variáveis de ambiente

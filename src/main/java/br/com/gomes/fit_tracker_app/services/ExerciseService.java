@@ -31,6 +31,15 @@ public class ExerciseService {
         return exerciseList.stream().map((ExerciseResponseDTO::new)).toList();
     }
 
+    public List<Exercise> findAllByIds(List<Long> ids){
+        User user = authenticationService.getAuthenticatedUser();
+        List<Exercise> exercises = exerciseRepository.findAllByIdInAndUserId(ids, user.getId());
+        if(exercises.isEmpty()){
+            throw new ResourceNotFoundException("Nenhum exercício encontrado para os ids fornecidos.");
+        }
+        return exercises;
+    }
+
     public ExerciseResponseDTO findById(Long id){
         Exercise entity = findByIdOrThrowsNotFoundException(id);
         return new ExerciseResponseDTO(entity);

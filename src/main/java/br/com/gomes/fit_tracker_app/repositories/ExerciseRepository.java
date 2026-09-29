@@ -13,4 +13,6 @@ public interface ExerciseRepository extends JpaRepository<Exercise, Long> {
     List<Exercise> findAllByUserId(Long userId);
 
     Optional<Exercise> findByIdAndUserId(Long id, Long userId);
+
+    List<Exercise> findAllByIdInAndUserId(List<Long> ids, Long id);
 }

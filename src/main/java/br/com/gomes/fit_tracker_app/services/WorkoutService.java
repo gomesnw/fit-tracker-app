@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -38,19 +41,27 @@ public class WorkoutService {
         Workout entity = new Workout();
         User user = authenticationService.getAuthenticatedUser();
 
+        List<Long> exerciseIds = workout.exercises().stream()
+                .map(WorkoutExerciseInsertDTO::exerciseId)
+                .toList();
+        Map<Long, Exercise> exerciseMap = exerciseService.findAllByIds(exerciseIds).stream()
+                .collect(Collectors.toMap(Exercise::getId, Function.identity()));
+
         entity.setUser(user);
 
         for(WorkoutExerciseInsertDTO exerciseInsert : workout.exercises()){
-            Exercise exercise = exerciseService.findByIdOrThrowsNotFoundException(exerciseInsert.exerciseId());
+            Exercise exercise = exerciseMap.get(exerciseInsert.exerciseId());
 
+            if (exercise == null) {
+                throw new ResourceNotFoundException("Exercício não encontrado com o id fornecido: " + exerciseInsert.exerciseId());
+            }
             WorkoutExercise workoutExercise = WorkoutExercise.builder().exercise(exercise)
                     .orderIndex(exerciseInsert.orderIndex()).notes(exerciseInsert.notes()).build();
             entity.addWorkoutExercise(workoutExercise);
-
-            entity.setName(workout.name());
-            entity.setNotes(workout.notes());
-            entity.setStatus(WorkoutStatus.STARTED);
         }
+        entity.setName(workout.name());
+        entity.setNotes(workout.notes());
+        entity.setStatus(WorkoutStatus.STARTED);
 
         workoutRepository.save(entity);
         return new WorkoutResponseDTO(entity);
@@ -109,7 +120,7 @@ public class WorkoutService {
         return new WorkoutExerciseSetResponseDTO(set);
     }
 
-    private Workout findByIdOrThrowsNotFoundException(Long id){
+    public Workout findByIdOrThrowsNotFoundException(Long id){
         Long userId = authenticationService.getAuthenticatedUser().getId();
         return workoutRepository.findByIdAndUserId(id, userId)
                 .orElseThrow(() -> new ResourceNotFoundException(String.format(MSG_WORKOUT_NOT_FOUND, id)));

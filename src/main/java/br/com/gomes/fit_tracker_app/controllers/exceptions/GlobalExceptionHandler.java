@@ -2,6 +2,7 @@ package br.com.gomes.fit_tracker_app.controllers.exceptions;
 
 import br.com.gomes.fit_tracker_app.exceptions.BadRequestException;
 import br.com.gomes.fit_tracker_app.exceptions.ResourceNotFoundException;
+import br.com.gomes.fit_tracker_app.exceptions.UnauthorizedException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,5 +37,17 @@ public class GlobalExceptionHandler {
                 .build();
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<StandardError> unauthorizedException(UnauthorizedException ex) {
+        StandardError response = StandardError.builder()
+                .timestamp(Instant.now())
+                .error("Unauthorized")
+                .message(ex.getMessage())
+                .status(HttpStatus.UNAUTHORIZED.value())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
 }

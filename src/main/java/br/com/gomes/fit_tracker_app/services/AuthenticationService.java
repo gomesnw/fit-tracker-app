@@ -8,7 +8,7 @@ import br.com.gomes.fit_tracker_app.dtos.LoginRequestDTO;
 import br.com.gomes.fit_tracker_app.dtos.RegisterRequestDTO;
 import br.com.gomes.fit_tracker_app.dtos.TokenResponseDTO;
 import br.com.gomes.fit_tracker_app.exceptions.BadRequestException;
-import br.com.gomes.fit_tracker_app.exceptions.ResourceNotFoundException;
+import br.com.gomes.fit_tracker_app.exceptions.UnauthorizedException;
 import br.com.gomes.fit_tracker_app.repositories.RoleRepository;
 import br.com.gomes.fit_tracker_app.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -66,8 +66,6 @@ public class AuthenticationService {
            return new TokenResponseDTO(token, expirationTime);
         } catch (BadCredentialsException e) {
             throw new BadRequestException("Credenciais inválidas");
-        } catch (Exception e) {
-            throw e;
         }
     }
 
@@ -76,7 +74,7 @@ public class AuthenticationService {
         String username = authentication.getName();
 
        return userRepository.findByEmail(username)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
+                .orElseThrow(() -> new UnauthorizedException("Usuário não autenticado"));
     }
 }
 
